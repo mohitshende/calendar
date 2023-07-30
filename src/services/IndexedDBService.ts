@@ -90,7 +90,6 @@ export function fetchEventDataFromIndexedDB(): Promise<{
         };
 
         getRequest.onsuccess = (event) => {
-          console.log(event);
           const data = (event.target as IDBRequest).result;
           resolve({ calendar_events: data });
         };

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import WeekView from "./components/WeekView";
 import { populateIndexedDBWithEvents } from "./services/IndexedDBService";
 
@@ -27,36 +27,44 @@ const calendar_events = [
   {
     id: 4,
     title: "Project Presentation",
-    date: "2023-08-12",
+    date: "2023-08-7",
     start_time: "2:00 PM",
     end_time: "4:00 PM",
   },
   {
     id: 5,
     title: "Client Conference Call",
-    date: "2023-08-18",
+    date: "2023-08-9",
     start_time: "3:30 PM",
     end_time: "4:30 PM",
   },
   {
     id: 6,
     title: "Team Building Event",
-    date: "2023-08-25",
+    date: "2023-08-12",
     start_time: "9:00 AM",
     end_time: "5:00 PM",
   },
 ];
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     populateIndexedDBWithEvents(calendar_events)
       .then(() => {
         console.log("IndexedDB populated with events data.");
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Error populating IndexedDB:", error);
+        setLoading(false);
       });
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return <WeekView />;
 }
