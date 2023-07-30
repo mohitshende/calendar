@@ -70,10 +70,12 @@ const WeekView: React.FC = () => {
   useTick();
 
   return (
-    <div className="container mx-auto mt-4 p-4 h-full">
-      <h1 className="text-2xl font-bold mb-4">Google Calendar Week View</h1>
+    <div className="mt-4 px-6 h-full">
+      <h1 className="text-2xl font-bold mb-6 text-center">
+        Google Calendar Week View
+      </h1>
 
-      <div className="flex items-center gap-3 mb-30">
+      <div className="flex items-center flex-wrap gap-3 mb-30 border-b border-gray-200 pb-5">
         <button
           className="border border-gray-300 hover:bg-gray-100  font-semibold py-2 px-4 rounded"
           onClick={goToCurrentDate}
