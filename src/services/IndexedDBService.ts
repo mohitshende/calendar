@@ -9,12 +9,15 @@ function createIndexedDB(): Promise<IDBDatabase> {
     const request = window.indexedDB.open(DB_NAME, DB_VERSION);
 
     request.onerror = (event) => {
-      console.error("Error opening database:", event.target.error);
+      console.error(
+        "Error opening database:",
+        (event.target as IDBRequest).error
+      );
       reject("Error opening database");
     };
 
     request.onupgradeneeded = (event) => {
-      const db = event.target.result;
+      const db = (event.target as IDBRequest).result;
 
       // Check if the object store already exists (to avoid errors during repeated database upgrades)
       if (!db.objectStoreNames.contains(OBJECT_STORE_NAME)) {
@@ -54,7 +57,10 @@ export function populateIndexedDBWithEvents(events: Event[]): Promise<void> {
         };
 
         transaction.onerror = (event) => {
-          console.error("Error populating IndexedDB:", event.target.error);
+          console.error(
+            "Error populating IndexedDB:",
+            (event.target as IDBRequest).error
+          );
           reject("Error populating IndexedDB");
         };
       })
@@ -76,12 +82,16 @@ export function fetchEventDataFromIndexedDB(): Promise<{
         const getRequest = objectStore.getAll();
 
         getRequest.onerror = (event) => {
-          console.error("Error fetching data:", event.target.error);
+          console.error(
+            "Error fetching data:",
+            (event.target as IDBRequest).error
+          );
           reject("Error fetching data");
         };
 
         getRequest.onsuccess = (event) => {
-          const data = event.target.result;
+          console.log(event);
+          const data = (event.target as IDBRequest).result;
           resolve({ calendar_events: data });
         };
       })
