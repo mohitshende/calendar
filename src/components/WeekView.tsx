@@ -63,6 +63,7 @@ const WeekView: React.FC = () => {
       const dayOfWeek = today.getDay();
 
       today.setDate(today.getDate() - dayOfWeek);
+      setCurrentMonthAndYear(getCurrentMonth(today));
       return today;
     });
   };
@@ -70,7 +71,7 @@ const WeekView: React.FC = () => {
   useTick();
 
   return (
-    <div className="mt-4 px-6 h-full">
+    <div className="mt-4 px-2 h-full">
       <h1 className="text-2xl font-bold mb-6 text-center">
         Google Calendar Week View
       </h1>

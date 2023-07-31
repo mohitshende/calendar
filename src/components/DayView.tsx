@@ -41,7 +41,7 @@ const DayView: React.FC<DayViewProps> = ({ date, events }) => {
           {formatDate(date).slice(0, 3).toUpperCase()}
         </p>
         <div
-          className="flex items-center justify-center h-10 w-10 rounded-full"
+          className="flex items-center justify-center h-9 w-9 rounded-full"
           style={{
             background: isSameDay(new Date(), date) ? "#1a73e8" : "white",
             color: isSameDay(new Date(), date) ? "white" : "black",
