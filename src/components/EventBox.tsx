@@ -1,24 +1,9 @@
-import { getHourFromTime, getMinuteFromTime } from "../utils/utils";
+import { calculateHourDifference } from "../utils/utils";
 import { Event } from "./DayView";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
 const EventBox = ({ event }: { event: Event }) => {
-  const eventStartHour = getHourFromTime(event.start_time).hour;
-  const eventStartMinute = getMinuteFromTime(event.start_time);
-  const eventEndHour = getHourFromTime(event.end_time).hour;
-  const eventEndMinute = getMinuteFromTime(event.end_time);
-
-  const startHour = eventStartHour === 12 ? 0 : eventStartHour;
-
-  const durationInHours =
-    eventEndHour - startHour + (eventEndMinute - eventStartMinute) / 60;
-
-  const top = Math.abs(
-    (getHourFromTime(event.start_time).ampm == "PM"
-      ? startHour + 12
-      : startHour) +
-      eventStartMinute / 60
-  );
+  const top = calculateHourDifference("12:00 AM", event.start_time);
 
   return (
     <Tooltip.Provider skipDelayDuration={50}>
@@ -29,7 +14,9 @@ const EventBox = ({ event }: { event: Event }) => {
             className="bg-blue-200 p-1 rounded absolute w-[100%] border border-blue-400 truncate"
             style={{
               top: `${8 + top * 48}px`,
-              height: `${durationInHours * 48}px`,
+              height: `${
+                calculateHourDifference(event.start_time, event.end_time) * 48
+              }px`,
             }}
           >
             <span className="text-blue-600 ">{event.title}</span>

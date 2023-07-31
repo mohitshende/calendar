@@ -66,3 +66,36 @@ export function getHourFromTime(time: string): { hour: number; ampm: string } {
 export function getMinuteFromTime(time: string): number {
   return parseInt(time.split(":")[1], 10);
 }
+
+export function calculateHourDifference(startTime: string, endTime: string) {
+  const [startHour, startMinutes, startMeridiem] = startTime.split(/:|\s/);
+  const [endHour, endMinutes, endMeridiem] = endTime.split(/:|\s/);
+
+  let start = new Date(
+    2000,
+    0,
+    1,
+    parseInt(startHour),
+    parseInt(startMinutes),
+    0,
+    0
+  );
+  let end = new Date(2000, 0, 1, parseInt(endHour), parseInt(endMinutes), 0, 0);
+
+  if (startMeridiem.toLowerCase() === "pm" && startHour !== "12") {
+    start.setHours(start.getHours() + 12);
+  } else if (startMeridiem.toLowerCase() === "am" && startHour === "12") {
+    start.setHours(0);
+  }
+
+  if (endMeridiem.toLowerCase() === "pm" && endHour !== "12") {
+    end.setHours(end.getHours() + 12);
+  } else if (endMeridiem.toLowerCase() === "am" && endHour === "12") {
+    end.setHours(0);
+  }
+
+  const timeDifference = Number(end) - Number(start);
+  const hoursDifference = timeDifference / (1000 * 60 * 60);
+
+  return hoursDifference;
+}
