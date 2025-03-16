@@ -72,9 +72,9 @@ const WeekView: React.FC = () => {
 
   return (
     <div className="mt-4 px-2 h-full">
-      <h1 className="text-2xl font-bold mb-6 text-center">
+      {/* <h1 className="text-2xl font-bold mb-6 text-center">
         Google Calendar Week View
-      </h1>
+      </h1> */}
 
       <div className="flex items-center flex-wrap gap-3 mb-30 border-b border-gray-200 pb-5">
         <button
@@ -108,7 +108,7 @@ const WeekView: React.FC = () => {
           </div>
           <div className="grid pt-2 border-r">
             {Array.from({ length: 24 }).map((_, hour) => (
-              <div key={hour} className="h-12 border-t border-gray-200">
+              <div key={hour} className="h-20 border-t border-gray-200">
                 <span className="text-xs text-gray-500 ">
                   {formatHour(hour)}
                 </span>

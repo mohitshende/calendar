@@ -4,7 +4,7 @@ const CurrentTimeMarker = ({ date, hour }: { date: Date; hour: number }) => {
   const calculateOffset = () => {
     const now = new Date();
     const minutes = now.getMinutes();
-    return Math.floor((minutes / 60) * 48);
+    return Math.floor((minutes / 60) * 80);
   };
 
   if (isSameDay(new Date(), date) && isSameHour(hour)) {

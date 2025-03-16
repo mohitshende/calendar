@@ -1,49 +1,50 @@
 import { useEffect, useState } from "react";
 import WeekView from "./components/WeekView";
 import { populateIndexedDBWithEvents } from "./services/IndexedDBService";
+import { BrowserRouter, Routes, Route } from "react-router";
+import LoginPage from "./pages/Login";
+import SignupPage from "./pages/Signup";
 
 const calendar_events = [
   {
     id: 1,
-    title: "Meeting with Marketing Team",
-    date: "2023-07-30",
-    start_time: "12:00 AM",
-    end_time: "1:30 AM",
+    title: "History Study Session",
+    date: "2025-03-16",
+    start_time: "01:00 AM",
+    end_time: "01:50 AM",
+    user: {
+      name: "Mack",
+    },
   },
   {
     id: 2,
-    title: "Discussion",
-    date: "2023-08-01",
-    start_time: "5:00 AM",
-    end_time: "6:30 AM",
+    title: "Study Session",
+    date: "2025-03-16",
+    start_time: "03:00 AM",
+    end_time: "03:50 AM",
+    user: {
+      name: "Mohit",
+    },
   },
   {
     id: 3,
-    title: "Lunch with Colleagues",
-    date: "2023-08-05",
-    start_time: "12:00 PM",
-    end_time: "3:30 PM",
+    title: "Study Session",
+    date: "2025-03-16",
+    start_time: "07:00 AM",
+    end_time: "07:50 AM",
+    user: {
+      name: "Kate",
+    },
   },
   {
     id: 4,
-    title: "Project Presentation",
-    date: "2023-08-7",
-    start_time: "2:00 PM",
-    end_time: "4:00 PM",
-  },
-  {
-    id: 5,
-    title: "Client Conference Call",
-    date: "2023-08-9",
-    start_time: "3:30 PM",
-    end_time: "4:30 PM",
-  },
-  {
-    id: 6,
-    title: "Team Building Event",
-    date: "2023-08-12",
-    start_time: "9:00 AM",
-    end_time: "5:00 PM",
+    title: "Study Session",
+    date: "2025-03-16",
+    start_time: "05:00 AM",
+    end_time: "05:25 AM",
+    user: {
+      name: "Mack",
+    },
   },
 ];
 
@@ -66,7 +67,15 @@ function App() {
     return <div>Loading...</div>;
   }
 
-  return <WeekView />;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/" element={<WeekView />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;

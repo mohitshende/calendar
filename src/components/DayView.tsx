@@ -52,7 +52,7 @@ const DayView: React.FC<DayViewProps> = ({ date, events }) => {
       </div>
       <div className="w-full grid pt-2 border-r relative">
         {Array.from({ length: 24 }).map((_, hour) => (
-          <div key={hour} className="border-t border-gray-200 h-12">
+          <div key={hour} className="border-t border-gray-200 h-20">
             <CurrentTimeMarker date={date} hour={hour} />
             {dayEvents
               .filter((event) => {
