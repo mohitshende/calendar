@@ -2,6 +2,8 @@ import { calculateHourDifference } from "../utils/utils";
 import { Event } from "./DayView";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
+export const HOUR_BOX_HEIGHT = 160;
+
 const EventBox = ({ event }: { event: Event }) => {
   const top = calculateHourDifference("12:00 AM", event.start_time);
 
@@ -23,9 +25,10 @@ const EventBox = ({ event }: { event: Event }) => {
             key={event.id}
             className="bg-blue-200 flex flex-col gap-2 p-1 rounded absolute w-[100%] border border-blue-400 truncate"
             style={{
-              top: `${8 + top * 80}px`,
+              top: `${8 + top * HOUR_BOX_HEIGHT}px`,
               height: `${
-                calculateHourDifference(event.start_time, event.end_time) * 80
+                calculateHourDifference(event.start_time, event.end_time) *
+                HOUR_BOX_HEIGHT
               }px`,
             }}
           >

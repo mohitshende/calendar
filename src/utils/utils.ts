@@ -55,12 +55,15 @@ export function formatTime(time: string): string {
   return `${hourString}:${minuteString}`;
 }
 
-export function getHourFromTime(time: string): { hour: number; ampm: string } {
-  const [hourString, ampm] = time.split(" ");
+export function getHourFromTime(time: string): {
+  hour: number;
+  minutes: number;
+  ampm: string;
+} {
+  const [hourMinuteString, ampm] = time.split(" "); // "03:00 AM" → ["03:00", "AM"]
+  const [hour, minutes] = hourMinuteString.split(":").map(Number); // "03:00" → [3, 0]
 
-  const hour = parseInt(hourString, 10);
-
-  return { hour, ampm };
+  return { hour, minutes, ampm };
 }
 
 export function getMinuteFromTime(time: string): number {
@@ -98,4 +101,16 @@ export function calculateHourDifference(startTime: string, endTime: string) {
   const hoursDifference = timeDifference / (1000 * 60 * 60);
 
   return hoursDifference;
+}
+
+export function getNextSunday(selectedDate: Date) {
+  const date = new Date(selectedDate);
+  const dayOfWeek = date.getDay();
+
+  // Move to the next Sunday if not already a Sunday
+  if (dayOfWeek !== 0) {
+    date.setDate(date.getDate() + (7 - dayOfWeek));
+  }
+
+  return date.toISOString().split("T")[0]; // Return as YYYY-MM-DD
 }
