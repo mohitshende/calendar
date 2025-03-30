@@ -6,6 +6,7 @@ import {
 } from "../services/IndexedDBService";
 import { formatHour, getNextSunday } from "../utils/utils";
 import useTick from "../hooks/useTick";
+import { API_BASE_URL } from "../contstants";
 
 const WeekView: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -120,6 +121,11 @@ const WeekView: React.FC = () => {
 
   const [selectedTimeframe, setSelectedTimeframe] = useState("All");
 
+  function handleBookSession() {
+    //call API for booking a session according to user's time slot
+    API_BASE_URL;
+  }
+
   if (loading) {
     return (
       <div className="w-full h-screen flex items-center justify-center text-2xl">
@@ -130,31 +136,29 @@ const WeekView: React.FC = () => {
 
   return (
     <div className="mt-4 px-2 h-full">
-      {/* <h1 className="text-2xl font-bold mb-6 text-center">
-        Google Calendar Week View
-      </h1> */}
+      <div className="h-20 fixed w-screen top-0 left-0 bg-white z-40 flex items-center flex-wrap justify-between mb-30 border-b border-gray-200 p-5">
+        <div className="flex items-center flex-wrap gap-3">
+          <button
+            className="border border-gray-300 hover:bg-gray-100  font-semibold py-2 px-4 rounded"
+            onClick={goToCurrentDate}
+          >
+            Today
+          </button>
+          <button
+            className="border border-gray-300 hover:bg-gray-100  font-semibold py-2 px-4 rounded"
+            onClick={handlePreviousWeek}
+          >
+            Previous Week
+          </button>
+          <button
+            className="border border-gray-300 hover:bg-gray-100 font-semibold py-2 px-4 rounded"
+            onClick={handleNextWeek}
+          >
+            Next Week
+          </button>
 
-      <div className="h-20 fixed w-screen top-0 bg-white z-40 flex items-center flex-wrap gap-3 mb-30 border-b border-gray-200 pb-5">
-        <button
-          className="border border-gray-300 hover:bg-gray-100  font-semibold py-2 px-4 rounded"
-          onClick={goToCurrentDate}
-        >
-          Today
-        </button>
-        <button
-          className="border border-gray-300 hover:bg-gray-100  font-semibold py-2 px-4 rounded"
-          onClick={handlePreviousWeek}
-        >
-          Previous Week
-        </button>
-        <button
-          className="border border-gray-300 hover:bg-gray-100 font-semibold py-2 px-4 rounded"
-          onClick={handleNextWeek}
-        >
-          Next Week
-        </button>
-
-        <h1 className="text-2xl font-semibold">{currentMonthAndYear}</h1>
+          <h1 className="text-2xl font-semibold">{currentMonthAndYear}</h1>
+        </div>
 
         <div className="flex gap-4 border border-gray-300 rounded overflow-hidden cursor-pointer ml-20">
           <div
@@ -190,6 +194,21 @@ const WeekView: React.FC = () => {
             75m
           </div>
         </div>
+
+        <div className="flex items-center flex-wrap gap-10">
+          <button
+            className="bg-blue-500 text-white p-2 rounded-md disabled:opacity-50"
+            onClick={handleBookSession}
+            disabled={loading}
+          >
+            Book Session
+          </button>
+
+          <div className="text-blue-600 text-xl font-bold ">
+            Hi, Mohit
+            {/* {localStorage.getItem("user").name} */}
+          </div>
+        </div>
       </div>
 
       <div
@@ -212,7 +231,12 @@ const WeekView: React.FC = () => {
         </div>
 
         {weekDays.map((date, index) => (
-          <DayView key={index} date={date} events={events} selectedTimeframe={selectedTimeframe} />
+          <DayView
+            key={index}
+            date={date}
+            events={events}
+            selectedTimeframe={selectedTimeframe}
+          />
         ))}
       </div>
     </div>
