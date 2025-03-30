@@ -7,6 +7,7 @@ import {
 import { formatHour, getNextSunday } from "../utils/utils";
 import useTick from "../hooks/useTick";
 import { API_BASE_URL } from "../contstants";
+import CreateSessionModal from "./CreateSessionModal";
 
 const WeekView: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -120,10 +121,10 @@ const WeekView: React.FC = () => {
   useTick();
 
   const [selectedTimeframe, setSelectedTimeframe] = useState("All");
+  const [isOpen, setIsOpen] = useState(false);
 
   function handleBookSession() {
-    //call API for booking a session according to user's time slot
-    API_BASE_URL;
+    setIsOpen(true);
   }
 
   if (loading) {
@@ -135,111 +136,114 @@ const WeekView: React.FC = () => {
   }
 
   return (
-    <div className="mt-4 px-2 h-full">
-      <div className="h-20 fixed w-screen top-0 left-0 bg-white z-40 flex items-center flex-wrap justify-between mb-30 border-b border-gray-200 p-5">
-        <div className="flex items-center flex-wrap gap-3">
-          <button
-            className="border border-gray-300 hover:bg-gray-100  font-semibold py-2 px-4 rounded"
-            onClick={goToCurrentDate}
-          >
-            Today
-          </button>
-          <button
-            className="border border-gray-300 hover:bg-gray-100  font-semibold py-2 px-4 rounded"
-            onClick={handlePreviousWeek}
-          >
-            Previous Week
-          </button>
-          <button
-            className="border border-gray-300 hover:bg-gray-100 font-semibold py-2 px-4 rounded"
-            onClick={handleNextWeek}
-          >
-            Next Week
-          </button>
+    <>
+      <CreateSessionModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <div className="mt-4 px-2 h-full">
+        <div className="h-20 fixed w-screen top-0 left-0 bg-white z-40 flex items-center flex-wrap justify-between mb-30 border-b border-gray-200 p-5">
+          <div className="flex items-center flex-wrap gap-3">
+            <button
+              className="border border-gray-300 hover:bg-gray-100  font-semibold py-2 px-4 rounded"
+              onClick={goToCurrentDate}
+            >
+              Today
+            </button>
+            <button
+              className="border border-gray-300 hover:bg-gray-100  font-semibold py-2 px-4 rounded"
+              onClick={handlePreviousWeek}
+            >
+              Previous Week
+            </button>
+            <button
+              className="border border-gray-300 hover:bg-gray-100 font-semibold py-2 px-4 rounded"
+              onClick={handleNextWeek}
+            >
+              Next Week
+            </button>
 
-          <h1 className="text-2xl font-semibold">{currentMonthAndYear}</h1>
+            <h1 className="text-2xl font-semibold">{currentMonthAndYear}</h1>
+          </div>
+
+          <div className="flex gap-4 border border-gray-300 rounded overflow-hidden cursor-pointer ml-20">
+            <div
+              className={`${
+                selectedTimeframe === "All" ? "bg-blue-500 text-white" : ""
+              } py-2 px-4`}
+              onClick={() => setSelectedTimeframe("All")}
+            >
+              All
+            </div>
+            <div
+              className={`${
+                selectedTimeframe === "25" ? "bg-blue-500 text-white" : ""
+              } py-2 px-4`}
+              onClick={() => setSelectedTimeframe("25")}
+            >
+              25m
+            </div>
+            <div
+              className={`${
+                selectedTimeframe === "50" ? "bg-blue-500 text-white" : ""
+              } py-2 px-4`}
+              onClick={() => setSelectedTimeframe("50")}
+            >
+              50m
+            </div>
+            <div
+              className={`${
+                selectedTimeframe === "75" ? "bg-blue-500 text-white" : ""
+              } py-2 px-4`}
+              onClick={() => setSelectedTimeframe("75")}
+            >
+              75m
+            </div>
+          </div>
+
+          <div className="flex items-center flex-wrap gap-10">
+            <button
+              className="bg-blue-500 text-white p-2 rounded-md disabled:opacity-50"
+              onClick={handleBookSession}
+              disabled={loading}
+            >
+              Book Session
+            </button>
+
+            <div className="text-blue-600 text-xl font-bold ">
+              Hi, Mohit
+              {/* {localStorage.getItem("user").name} */}
+            </div>
+          </div>
         </div>
 
-        <div className="flex gap-4 border border-gray-300 rounded overflow-hidden cursor-pointer ml-20">
-          <div
-            className={`${
-              selectedTimeframe === "All" ? "bg-blue-500 text-white" : ""
-            } py-2 px-4`}
-            onClick={() => setSelectedTimeframe("All")}
-          >
-            All
-          </div>
-          <div
-            className={`${
-              selectedTimeframe === "25" ? "bg-blue-500 text-white" : ""
-            } py-2 px-4`}
-            onClick={() => setSelectedTimeframe("25")}
-          >
-            25m
-          </div>
-          <div
-            className={`${
-              selectedTimeframe === "50" ? "bg-blue-500 text-white" : ""
-            } py-2 px-4`}
-            onClick={() => setSelectedTimeframe("50")}
-          >
-            50m
-          </div>
-          <div
-            className={`${
-              selectedTimeframe === "75" ? "bg-blue-500 text-white" : ""
-            } py-2 px-4`}
-            onClick={() => setSelectedTimeframe("75")}
-          >
-            75m
-          </div>
-        </div>
-
-        <div className="flex items-center flex-wrap gap-10">
-          <button
-            className="bg-blue-500 text-white p-2 rounded-md disabled:opacity-50"
-            onClick={handleBookSession}
-            disabled={loading}
-          >
-            Book Session
-          </button>
-
-          <div className="text-blue-600 text-xl font-bold ">
-            Hi, Mohit
-            {/* {localStorage.getItem("user").name} */}
-          </div>
-        </div>
-      </div>
-
-      <div
-        className="h-20 fixed w-screen bg-white z-40 top-20
+        <div
+          className="h-20 fixed w-screen bg-white z-40 top-20
       border-b border-gray-200
       "
-      ></div>
+        ></div>
 
-      <div className="grid grid-cols-8 overflow-scroll mt-40">
-        <div className="col-span-1">
-          <div className="grid pt-2 border-r">
-            {Array.from({ length: 24 }).map((_, hour) => (
-              <div key={hour} className="h-40 border-t border-gray-200">
-                <span className="text-xs text-black bg-white relative top-[-15px] z-30">
-                  {formatHour(hour)}
-                </span>
-              </div>
-            ))}
+        <div className="grid grid-cols-8 overflow-scroll mt-40">
+          <div className="col-span-1">
+            <div className="grid pt-2 border-r">
+              {Array.from({ length: 24 }).map((_, hour) => (
+                <div key={hour} className="h-40 border-t border-gray-200">
+                  <span className="text-xs text-black bg-white relative top-[-15px] z-30">
+                    {formatHour(hour)}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
 
-        {weekDays.map((date, index) => (
-          <DayView
-            key={index}
-            date={date}
-            events={events}
-            selectedTimeframe={selectedTimeframe}
-          />
-        ))}
+          {weekDays.map((date, index) => (
+            <DayView
+              key={index}
+              date={date}
+              events={events}
+              selectedTimeframe={selectedTimeframe}
+            />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
